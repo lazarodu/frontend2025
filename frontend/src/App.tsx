@@ -1,18 +1,20 @@
-import { Post } from "./components/Post";
+import { PostDetails } from "./components/PostDetails";
 
 export function App() {
 
   return (
     <>
-      <Post
+      <PostDetails
         title="Aula sobre teste" 
         description="Fizemos nosso primeiro teste"
-        content="Este teste ..."
+        autor="Lázaro"
+        data="12/05/2025"
       />
-      <Post
+      <PostDetails
         title="Aula sobre teste" 
         description="Fizemos nosso primeiro teste"
-        content="Este teste ..."
+        autor="Lázaro"
+        data="12/05/2025"
       />
     </>
   )
