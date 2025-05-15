@@ -1,25 +1,26 @@
-interface PostProps {
-    id: string
-    title: string
-    description: string
-    autor: string
-    data: string
+import { Link } from "react-router-dom";
+
+export interface PostProps {
+  id: string;
+  title: string;
+  description: string;
+  autor: string;
+  data: string;
 }
 interface PostListProps {
-    posts: PostProps[]
+  posts: PostProps[];
 }
-export function Post({posts}: PostListProps) {
-    return (
-        <>
-            {posts.map((post) => (
-                <section key={post.id}>
-                    <aside>
-                        <h3>{post.title}</h3>
-                        <h6>{post.autor}</h6>, <h6>{post.data}</h6>
-                    </aside>
-                    <h5>{post.description}</h5>
-                </section>
-            ))}
-        </>
-    )
+export function Post({ posts }: PostListProps) {
+  return (
+    <>
+      {posts.map((post) => (
+        <section key={post.id}>
+          <h3>{post.title}</h3>
+          <h5>{post.autor}</h5>, <h5>{post.data}</h5>
+          <p>{post.description}</p>
+          <Link to="/details">Ver</Link>
+        </section>
+      ))}
+    </>
+  );
 }

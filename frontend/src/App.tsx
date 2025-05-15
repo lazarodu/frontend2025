@@ -1,21 +1,12 @@
-import { PostDetails } from "./components/PostDetails";
-
+import { BrowserRouter } from "react-router-dom";
+import { GlobalStyle } from "./styles/GlobalStyle";
+import {RouteWeb} from "./routes"
 export function App() {
 
   return (
-    <>
-      <PostDetails
-        title="Aula sobre teste" 
-        description="Fizemos nosso primeiro teste"
-        autor="Lázaro"
-        data="12/05/2025"
-      />
-      <PostDetails
-        title="Aula sobre teste" 
-        description="Fizemos nosso primeiro teste"
-        autor="Lázaro"
-        data="12/05/2025"
-      />
-    </>
+    <BrowserRouter>
+      <GlobalStyle />
+      <RouteWeb />
+    </BrowserRouter>
   )
 }
