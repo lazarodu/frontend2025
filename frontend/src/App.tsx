@@ -1,12 +1,11 @@
-import { BrowserRouter } from "react-router-dom";
 import { GlobalStyle } from "./styles/GlobalStyle";
-import {RouteWeb} from "./routes"
+import { RouteWeb } from "./routes";
+import { AuthProvider } from "./context/AuthContext";
 export function App() {
-
   return (
-    <BrowserRouter>
+    <AuthProvider>
       <GlobalStyle />
       <RouteWeb />
-    </BrowserRouter>
-  )
+    </AuthProvider>
+  );
 }

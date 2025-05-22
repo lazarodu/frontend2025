@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { SMain } from "./styles";
 
 export interface PostProps {
   id: string;
@@ -12,7 +13,7 @@ interface PostListProps {
 }
 export function Post({ posts }: PostListProps) {
   return (
-    <>
+    <SMain>
       {posts.map((post) => (
         <section key={post.id}>
           <h3>{post.title}</h3>
@@ -21,6 +22,6 @@ export function Post({ posts }: PostListProps) {
           <Link to="/details">Ver</Link>
         </section>
       ))}
-    </>
+    </SMain>
   );
 }
