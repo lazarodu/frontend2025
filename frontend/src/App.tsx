@@ -1,11 +1,18 @@
 import { GlobalStyle } from "./styles/GlobalStyle";
 import { RouteWeb } from "./routes";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider } from "./contexts/AuthContext";
+import { PostProvider } from "./contexts/PostContext";
+import { CommentProvider } from "./contexts/CommentContext";
+
 export function App() {
   return (
     <AuthProvider>
       <GlobalStyle />
-      <RouteWeb />
+      <PostProvider>
+        <CommentProvider>
+          <RouteWeb />
+        </CommentProvider>
+      </PostProvider>
     </AuthProvider>
   );
 }

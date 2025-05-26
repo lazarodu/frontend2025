@@ -14,8 +14,8 @@ export const SHeader = styled.header`
     display: none;
   }
 
-  img {
-    height: 3rem;
+  svg {
+    font-size: 5rem;
     margin: 0.5rem;
   }
 
@@ -37,13 +37,13 @@ export const SHeader = styled.header`
           font-size: 1rem;
         }
 
-        img {
-          height: 2rem;
+        svg {
+          font-size: 2rem;
           margin: 0.3rem;
         }
       }
 
-      a {
+      a, button {
         text-decoration: none;
         color: ${colors.black};
         background-color: ${colors.primary};
@@ -51,11 +51,12 @@ export const SHeader = styled.header`
         border-radius: 1.4rem;
         display: flex;
         align-items: center;
+        cursor: pointer;
       }
     }
   }
 
-  @media (max-width: 400px) {
+  @media (max-width: 560px) {
     flex-direction: row-reverse;
 
     nav {
@@ -65,7 +66,7 @@ export const SHeader = styled.header`
 
       label {
         margin-left: 0.5rem;
-        border: 0.18rem solid var(--black);
+        border: 0.18rem solid ${colors.black};
         width: 2.5rem;
         height: 2.5rem;
         display: flex;
@@ -75,7 +76,7 @@ export const SHeader = styled.header`
         cursor: pointer;
 
         span {
-          border: 0.1rem solid var(--black);
+          border: 0.1rem solid ${colors.black};
           width: 1.6rem;
           height: 0.1rem;
 

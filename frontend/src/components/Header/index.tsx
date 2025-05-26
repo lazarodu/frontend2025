@@ -1,11 +1,15 @@
 import { FcSearch, FcVoicePresentation } from "react-icons/fc";
 import { SHeader } from "./styles";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 export function Header() {
+  const { currentUser, logout } = useAuth()
   return (
     <SHeader>
-      <FcVoicePresentation />
+      <Link to="/">
+        <FcVoicePresentation />
+      </Link>
       <input type="checkbox" id="menu" />
       <nav>
         <label htmlFor="menu">
@@ -18,7 +22,16 @@ export function Header() {
             <FcSearch />
             <input type="text" name="search" placeholder="Busca" />
           </form>
-          <Link to="/login">Login</Link>
+
+          {currentUser ? (
+            <>
+              <Link to="/user/comments">Comentários</Link>
+              {currentUser.role === "admin" && <Link to="/admin/posts">Postagens</Link>}
+              <button type="button" onClick={logout}>Sair</button>
+            </>
+          ) : (
+            <Link to="/login">Login</Link>
+          )}
         </div>
       </nav>
     </SHeader>

@@ -6,6 +6,7 @@ describe("PostDetails", () => {
       <PostDetails
         title="Meu Post"
         description="Minha Descrição"
+        content=""
         autor="Lázaro"
         data="12/05/2025"
       />

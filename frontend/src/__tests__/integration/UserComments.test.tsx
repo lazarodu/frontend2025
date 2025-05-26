@@ -1,0 +1,104 @@
+/// <reference types="vitest/globals" />
+import { render, screen, fireEvent, waitFor } from "@testing-library/react"
+import { MemoryRouter } from "react-router-dom"
+import { UserCommentsPage } from "../../pages/UserComments"
+import { useAuth } from "../../hooks/useAuth"
+import { useComment } from "../../hooks/useComment"
+import { usePost } from "../../hooks/usePost"
+
+// Corrige mocks para serem vi.fn()
+vi.mock("../../hooks/useAuth", () => ({
+  useAuth: vi.fn(),
+}))
+vi.mock("../../hooks/useComment", () => ({
+  useComment: vi.fn(),
+}))
+vi.mock("../../hooks/usePost", () => ({
+  usePost: vi.fn(),
+}))
+
+describe("UserCommentsPage", () => {
+  const mockUser = { id: "1", role: "user" }
+  const mockComments = [
+    { id: "1", postId: "101", userId: "1", comment: "Comentário 1", data: "2024-05-01" },
+    { id: "2", postId: "102", userId: "1", comment: "Comentário 2", data: "2024-05-02" },
+  ]
+  const mockPosts = [
+    { id: "101", title: "Postagem 1" },
+    { id: "102", title: "Postagem 2" },
+  ]
+
+  beforeEach(() => {
+    // Limpa mocks para cada teste
+    vi.clearAllMocks()
+
+      // Configura valores padrão para hooks
+      ; (useAuth as vi.Mock).mockReturnValue({
+        currentUser: mockUser,
+      })
+      ; (useComment as vi.Mock).mockReturnValue({
+        getCommentsByUser: () => mockComments,
+        deleteComment: vi.fn(),
+      })
+      ; (usePost as vi.Mock).mockReturnValue({
+        posts: mockPosts,
+      })
+  })
+
+  it("renderiza lista de comentários do usuário com título do post", async () => {
+    render(
+      <MemoryRouter>
+        <UserCommentsPage />
+      </MemoryRouter>
+    )
+
+    expect(await screen.findByText("Meus comentários")).toBeInTheDocument()
+    expect(screen.getByText("Postagem 1")).toBeInTheDocument()
+    expect(screen.getByText("Comentário 1")).toBeInTheDocument()
+    expect(screen.getByText("Postagem 2")).toBeInTheDocument()
+    expect(screen.getByText("Comentário 2")).toBeInTheDocument()
+  })
+
+  it("exibe mensagem quando não há comentários", async () => {
+    ; (useComment as vi.Mock).mockReturnValue({
+      getCommentsByUser: () => [],
+      deleteComment: vi.fn(),
+    })
+
+    render(
+      <MemoryRouter>
+        <UserCommentsPage />
+      </MemoryRouter>
+    )
+
+    expect(await screen.findByText("Você não fez comentários ainda.")).toBeInTheDocument()
+  })
+
+  it("chama deleteComment e remove comentário ao clicar em Delete", async () => {
+    const deleteCommentMock = vi.fn().mockResolvedValue(undefined)
+      ; (useComment as vi.Mock).mockReturnValue({
+        getCommentsByUser: () => mockComments,
+        deleteComment: deleteCommentMock,
+      })
+
+    // Simula window.confirm como true
+    vi.spyOn(window, "confirm").mockReturnValue(true)
+
+    render(
+      <MemoryRouter>
+        <UserCommentsPage />
+      </MemoryRouter>
+    )
+
+    const deleteButtons = await screen.findAllByText("Delete")
+    expect(deleteButtons).toHaveLength(2)
+
+    fireEvent.click(deleteButtons[0])
+
+    await waitFor(() => {
+      expect(deleteCommentMock).toHaveBeenCalledWith("1")
+    })
+
+    window.confirm.mockRestore()
+  })
+})

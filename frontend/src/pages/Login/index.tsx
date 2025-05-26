@@ -1,46 +1,65 @@
 import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
-import { SMain } from "./styles";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+import { Button, Container, ErrorMessage, Form, FormGroup, Input, Label, RegisterLink, Title } from "./styles";
 
 export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+
   const { login } = useAuth();
   const navigate = useNavigate();
-  function handleLogin() {
-    if (login(email, password)) {
-      navigate("/admin");
-    } else {
-      alert("Credenciais inválidas!!!");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (!email || !password) return
+
+    setIsLoading(true)
+    setError("")
+
+    try {
+      await login(email, password)
+      navigate("/")
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to login")
+    } finally {
+      setIsLoading(false)
     }
   }
   return (
-    <SMain>
-      <h2>Acesse</h2>
-      <div>
-        <label htmlFor="email">E-mail</label>
-        <input
-          placeholder="E-mail"
-          type="email"
-          name="email"
-          id="email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="pass">Senha</label>
-        <input
-          placeholder="Senha"
-          type="password"
-          name="password"
-          id="pass"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <button type="button" onClick={handleLogin}>
-        Entrar
-      </button>
-    </SMain>
-  );
+    <Container>
+      <Title>Login</Title>
+
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+
+      <Form onSubmit={handleSubmit}>
+        <FormGroup>
+          <Label htmlFor="email">E-mail</Label>
+          <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        </FormGroup>
+
+        <FormGroup>
+          <Label htmlFor="password">Senha</Label>
+          <Input
+            id="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </FormGroup>
+
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? "Entrando..." : "Entrar"}
+        </Button>
+      </Form>
+
+      <RegisterLink>
+        Não tem uma conta? <Link to="/register">Register</Link>
+      </RegisterLink>
+    </Container>
+  )
 }

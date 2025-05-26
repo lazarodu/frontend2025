@@ -10,7 +10,14 @@ export const SMain = styled.main`
     background-color: ${colors.secondaryLight};
     border: 0.2rem solid ${colors.secondary};
     border-radius: 0.5rem;
-
+    header {
+      display: flex;
+      justify-content: space-between;
+      div {
+        display: flex;
+        align-items: baseline;
+      }
+    }
     a {
       text-decoration: none;
       color: ${colors.primary};
