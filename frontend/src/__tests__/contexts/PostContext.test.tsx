@@ -66,7 +66,6 @@ describe("PostContext / PostProvider", () => {
       vi.advanceTimersByTime(500)
     })
 
-    // Deve achar o post com id "1"
     expect(screen.getByText(/Get post 1 title:/)).toHaveTextContent("not found")
   })
 

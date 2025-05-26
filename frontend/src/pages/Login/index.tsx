@@ -24,7 +24,7 @@ export function Login() {
       await login(email, password)
       navigate("/")
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to login")
+      setError(err instanceof Error ? err.message : "Falha no login")
     } finally {
       setIsLoading(false)
     }
@@ -58,7 +58,7 @@ export function Login() {
       </Form>
 
       <RegisterLink>
-        Não tem uma conta? <Link to="/register">Register</Link>
+        Não tem uma conta? <Link to="/register">Registrar</Link>
       </RegisterLink>
     </Container>
   )

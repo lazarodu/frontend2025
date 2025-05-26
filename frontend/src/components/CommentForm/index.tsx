@@ -12,12 +12,14 @@ export function CommentForm({ postId, onSubmit }: CommentFormProps) {
   const [comment, setComment] = useState("");
   const { addComment } = useComment()
   const { currentUser } = useAuth()
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     if (!currentUser || !comment.trim()) return
 
+    setIsLoading(true)
     try {
       await addComment({
         postId,
@@ -30,6 +32,8 @@ export function CommentForm({ postId, onSubmit }: CommentFormProps) {
       onSubmit({ comment });
     } catch (error) {
       console.error("Falha ao adicionar o comentário:", error)
+    } finally {
+      setIsLoading(false)
     }
   };
 
@@ -46,7 +50,7 @@ export function CommentForm({ postId, onSubmit }: CommentFormProps) {
           onChange={(e) => setComment(e.target.value)}
         />
       </div>
-      <button type="submit">Enviar</button>
+      <button type="submit" disabled={isLoading}>{isLoading ? "Enviando..." : "Enviar"}</button>
     </SForm>
   );
 }

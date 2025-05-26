@@ -1,4 +1,3 @@
-/// <reference types="vitest/globals" />
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { vi, type Mock } from "vitest"
@@ -78,10 +77,10 @@ describe("AdminEditPostPage", () => {
 
     render(<AdminEditPostPage />)
 
-    expect(screen.getByText("Post Not Found")).toBeInTheDocument()
-    expect(screen.getByText("The post you're trying to edit doesn't exist or has been removed.")).toBeInTheDocument()
+    expect(screen.getByText("Post não encontrado")).toBeInTheDocument()
+    expect(screen.getByText("A postagem que você está tentando editar não existe ou foi removido.")).toBeInTheDocument()
 
-    await user.click(screen.getByText("Back to Posts"))
+    await user.click(screen.getByText("Voltar aos Posts"))
 
     expect(navigateMock).toHaveBeenCalledWith("/admin/posts")
   })

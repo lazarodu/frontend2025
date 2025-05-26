@@ -5,11 +5,11 @@ export const AdminPostPage = () => {
   const { posts, isLoading, deletePost } = usePost()
 
   const handleDeletePost = async (id: string) => {
-    if (window.confirm("Are you sure you want to delete this post?")) {
+    if (window.confirm("Tem certeza de que deseja excluir esta postagem?")) {
       try {
         await deletePost(id)
       } catch (error) {
-        console.error("Failed to delete post:", error)
+        console.error("Falha ao apagar o post:", error)
       }
     }
   }
@@ -23,7 +23,7 @@ export const AdminPostPage = () => {
         </TitleRow>
 
         {isLoading ? (
-          <LoadingMessage>Loading posts...</LoadingMessage>
+          <LoadingMessage>Carregando posts...</LoadingMessage>
         ) : posts.length === 0 ? (
           <NoPosts>Nenhum post encontrado. Crie o seu primeiro post!</NoPosts>
         ) : (

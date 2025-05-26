@@ -13,7 +13,8 @@ export const SForm = styled.form`
       align-items: center;
     }
     input, textarea {
-      border: 1px solid ${colors.black};
+      border: 1px solid ${colors.secondary};
+      border-radius: 0.4rem;
       padding: 0.3rem;
       font-size: 1.1rem;
     }
@@ -22,7 +23,7 @@ export const SForm = styled.form`
     background-color: ${colors.secondary};
     color: ${colors.white};
     border: none;
-    border-radius: 4px;
+    border-radius: 0.4rem;
     padding: 0.5rem 1rem;
     cursor: pointer;
     font-weight: bold;

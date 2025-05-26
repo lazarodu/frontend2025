@@ -1,4 +1,3 @@
-/// <reference types="vitest/globals" />
 import { fireEvent, render, screen } from "@testing-library/react"
 import { MemoryRouter } from "react-router-dom"
 import { AdminPostPage } from "../../pages/AdminPost"
@@ -33,7 +32,7 @@ describe("AdminPostPage", () => {
       </MemoryRouter>
     )
 
-    expect(screen.getByText(/Loading posts.../i)).toBeInTheDocument()
+    expect(screen.getByText(/Carregando posts.../i)).toBeInTheDocument()
   })
 
   it("mostra mensagem quando não há posts", () => {

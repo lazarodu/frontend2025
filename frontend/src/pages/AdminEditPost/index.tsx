@@ -30,7 +30,7 @@ export const AdminEditPostPage = () => {
       await updatePost(id, postData)
       navigate("/admin/posts")
     } catch (error) {
-      console.error("Failed to update post:", error)
+      console.error("Falha ao atualizar o post:", error)
     }
   }
 
@@ -38,9 +38,9 @@ export const AdminEditPostPage = () => {
     return (
       <>
         <NotFound>
-          <NotFoundTitle>Post Not Found</NotFoundTitle>
-          <NotFoundMessage>The post you're trying to edit doesn't exist or has been removed.</NotFoundMessage>
-          <BackButton onClick={() => navigate("/admin/posts")}>Back to Posts</BackButton>
+          <NotFoundTitle>Post não encontrado</NotFoundTitle>
+          <NotFoundMessage>A postagem que você está tentando editar não existe ou foi removido.</NotFoundMessage>
+          <BackButton onClick={() => navigate("/admin/posts")}>Voltar aos Posts</BackButton>
         </NotFound>
       </>
     )
@@ -49,7 +49,7 @@ export const AdminEditPostPage = () => {
   return (
     <>
       <Container>
-        <Title>Edit Post</Title>
+        <Title>Editar Post</Title>
         <PostForm initialData={post} onSubmit={handleSubmit} />
       </Container>
     </>

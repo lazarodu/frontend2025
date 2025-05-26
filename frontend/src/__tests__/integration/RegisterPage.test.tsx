@@ -56,6 +56,6 @@ describe("Register Route", () => {
     fireEvent.click(screen.getByRole("button", { name: /registrar/i }));
 
     // Deve exibir mensagem de erro
-    expect(await screen.findByText(/passwords do not match/i)).toBeInTheDocument();
+    expect(await screen.findByText(/As senhas não coincidem/i)).toBeInTheDocument();
   });
 });

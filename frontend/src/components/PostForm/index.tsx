@@ -16,13 +16,21 @@ export function PostForm({ initialData, onSubmit
     const [title, setTitle] = useState(initialData?.title || '')
     const [description, setDescription] = useState(initialData?.description || '')
     const [content, setContent] = useState(initialData?.content || '')
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
-        onSubmit({ title, description, content })
-        setTitle('')
-        setDescription('')
-        setContent('')
+        setIsLoading(true)
+        try {
+            onSubmit({ title, description, content })
+            setTitle('')
+            setDescription('')
+            setContent('')
+        } catch (err) {
+            console.error(err instanceof Error ? err.message : "Falha ao publicar o post")
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     return (
@@ -45,7 +53,7 @@ export function PostForm({ initialData, onSubmit
                     onChange={(e) => setContent(e.target.value)}
                 ></textarea>
             </div>
-            <button type="submit">Publicar</button>
+            <button type="submit" disabled={isLoading}>{isLoading ? "Publicando..." : "Publicar"}</button>
         </SForm>
     )
 }

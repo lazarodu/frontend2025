@@ -20,7 +20,7 @@ export const RegisterPage = () => {
     if (!name || !email || !password || !confirmPassword) return
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match")
+      setError("As senhas não coincidem")
       return
     }
 
@@ -31,7 +31,7 @@ export const RegisterPage = () => {
       await register(name, email, password)
       navigate("/")
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to register")
+      setError(err instanceof Error ? err.message : "Falha ao registrar")
     } finally {
       setIsLoading(false)
     }
@@ -40,7 +40,7 @@ export const RegisterPage = () => {
   return (
     <>
       <Container>
-        <Title>Register</Title>
+        <Title>Registrar</Title>
 
         {error && <ErrorMessage>{error}</ErrorMessage>}
 

@@ -5,7 +5,6 @@ import { useContext } from "react"
 
 vi.useFakeTimers()
 
-// Test Component
 const TestComponent = () => {
   const {
     comments,
@@ -125,7 +124,6 @@ describe("CommentContext / CommentProvider", () => {
       vi.advanceTimersByTime(500)
     })
 
-    // Confirma se o count de comments diminuiu
-    expect(screen.getByText(/Comments count:/)).toHaveTextContent("2") // Se antes eram 2, agora 1
+    expect(screen.getByText(/Comments count:/)).toHaveTextContent("2")
   })
 })

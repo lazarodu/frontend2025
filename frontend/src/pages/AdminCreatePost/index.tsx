@@ -23,7 +23,7 @@ export const AdminCreatePostPage = () => {
       })
       navigate("/admin/posts")
     } catch (error) {
-      console.error("Failed to create post:", error)
+      console.error("Falha ao criar o post:", error)
     }
   }
 

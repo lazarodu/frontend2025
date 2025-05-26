@@ -21,7 +21,7 @@ export const UserCommentsPage = () => {
     if (currentUser) {
       const comments = getCommentsByUser(currentUser.id)
 
-      // Add post title to each comment
+      // Adiciona postTitle para cada comment
       const commentsWithPost = comments.map((comment) => {
         const post = posts.find((a) => a.id === comment.postId)
         return {
@@ -51,7 +51,7 @@ export const UserCommentsPage = () => {
       <>
         <Container>
           <Title>Meus Comentários</Title>
-          <LoadingMessage>Loading comentários...</LoadingMessage>
+          <LoadingMessage>Carregando comentários...</LoadingMessage>
         </Container>
       </>
     )
@@ -72,7 +72,7 @@ export const UserCommentsPage = () => {
                 <CommentDate>{comment.data}</CommentDate>
               </CommentHeader>
               <CommentContent>{comment.comment}</CommentContent>
-              <DeleteButton onClick={() => handleDeleteComment(comment.id)}>Delete</DeleteButton>
+              <DeleteButton onClick={() => handleDeleteComment(comment.id)}>Apagar</DeleteButton>
             </CommentItem>
           ))
         )}

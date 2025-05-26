@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, [])
 
   const login = async (email: string, password: string) => {
-    // Simulate API call
+    // Simula chamada de API
     return new Promise<void>((resolve, reject) => {
       setTimeout(() => {
         const user = mockUsers.find((u) => u.email === email && u.password === password)
@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }
 
   const register = async (name: string, email: string, password: string) => {
-    // Simulate API call
+    // Simula chamada de API
     return new Promise<void>((resolve, reject) => {
       setTimeout(() => {
         const existingUser = mockUsers.find((u) => u.email === email)
@@ -74,10 +74,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             role: "user",
           }
 
-          // In a real app, you would send this to an API
+          // Em um aplicativo real, você enviaria isso para uma API
           mockUsers.push(newUser)
 
-          // Remove password before storing
+          // Remove password antes de armazenar
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const { password: _, ...userWithoutPassword } = newUser
           setCurrentUser(userWithoutPassword)

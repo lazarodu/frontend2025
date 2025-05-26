@@ -1,4 +1,3 @@
-/// <reference types="vitest/globals" />
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import { MemoryRouter } from "react-router-dom"
 import { UserCommentsPage } from "../../pages/UserComments"
@@ -91,7 +90,7 @@ describe("UserCommentsPage", () => {
       </MemoryRouter>
     )
 
-    const deleteButtons = await screen.findAllByText("Delete")
+    const deleteButtons = await screen.findAllByText("Apagar")
     expect(deleteButtons).toHaveLength(2)
 
     fireEvent.click(deleteButtons[0])

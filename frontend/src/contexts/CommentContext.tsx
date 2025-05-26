@@ -34,7 +34,7 @@ export const CommentProvider = ({ children }: CommentProviderProps) => {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Simulate API call
+    // Simula chamada de API
     setTimeout(() => {
       setComments(mockComments)
       setIsLoading(false)
@@ -54,7 +54,7 @@ export const CommentProvider = ({ children }: CommentProviderProps) => {
   }
 
   const addComment = async (commentData: Omit<CommentProps, "id" | "data">) => {
-    // Simulate API call
+    // Simula chamada de API
     return new Promise<CommentProps>((resolve) => {
       setTimeout(() => {
         const newComment: CommentProps = {
@@ -70,7 +70,7 @@ export const CommentProvider = ({ children }: CommentProviderProps) => {
   }
 
   const deleteComment = async (id: string) => {
-    // Simulate API call
+    // Simula chamada de API
     return new Promise<void>((resolve, reject) => {
       setTimeout(() => {
         const commentIndex = comments.findIndex((comment) => comment.id === id)

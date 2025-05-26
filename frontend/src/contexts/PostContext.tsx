@@ -29,7 +29,7 @@ export const PostProvider = ({ children }: PostProviderProps) => {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Simulate API call
+    // Simula chamada de API
     setTimeout(() => {
       setPosts(mockPosts)
       setIsLoading(false)
@@ -41,7 +41,7 @@ export const PostProvider = ({ children }: PostProviderProps) => {
   }
 
   const createPost = async (postData: Omit<PostProps, "id" | "data">) => {
-    // Simulate API call
+    // Simula chamada de API
     return new Promise<PostProps>((resolve) => {
       setTimeout(() => {
         const newPost: PostProps = {
@@ -57,7 +57,7 @@ export const PostProvider = ({ children }: PostProviderProps) => {
   }
 
   const updatePost = async (id: string, postData: Partial<PostProps>) => {
-    // Simulate API call
+    // Simula chamada de API
     return new Promise<PostProps>((resolve, reject) => {
       setTimeout(() => {
         const postIndex = posts.findIndex((post) => post.id === id)
@@ -82,7 +82,7 @@ export const PostProvider = ({ children }: PostProviderProps) => {
   }
 
   const deletePost = async (id: string) => {
-    // Simulate API call
+    // Simula chamada de API
     return new Promise<void>((resolve, reject) => {
       setTimeout(() => {
         const postIndex = posts.findIndex((post) => post.id === id)
