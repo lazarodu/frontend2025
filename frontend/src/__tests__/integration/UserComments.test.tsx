@@ -5,6 +5,7 @@ import { UserCommentsPage } from "../../pages/UserComments"
 import { useAuth } from "../../hooks/useAuth"
 import { useComment } from "../../hooks/useComment"
 import { usePost } from "../../hooks/usePost"
+import type { Mock } from "vitest"
 
 // Corrige mocks para serem vi.fn()
 vi.mock("../../hooks/useAuth", () => ({
@@ -33,14 +34,14 @@ describe("UserCommentsPage", () => {
     vi.clearAllMocks()
 
       // Configura valores padrão para hooks
-      ; (useAuth as vi.Mock).mockReturnValue({
+      ; (useAuth as Mock).mockReturnValue({
         currentUser: mockUser,
       })
-      ; (useComment as vi.Mock).mockReturnValue({
+      ; (useComment as Mock).mockReturnValue({
         getCommentsByUser: () => mockComments,
         deleteComment: vi.fn(),
       })
-      ; (usePost as vi.Mock).mockReturnValue({
+      ; (usePost as Mock).mockReturnValue({
         posts: mockPosts,
       })
   })
@@ -60,7 +61,7 @@ describe("UserCommentsPage", () => {
   })
 
   it("exibe mensagem quando não há comentários", async () => {
-    ; (useComment as vi.Mock).mockReturnValue({
+    ; (useComment as Mock).mockReturnValue({
       getCommentsByUser: () => [],
       deleteComment: vi.fn(),
     })
@@ -76,13 +77,13 @@ describe("UserCommentsPage", () => {
 
   it("chama deleteComment e remove comentário ao clicar em Delete", async () => {
     const deleteCommentMock = vi.fn().mockResolvedValue(undefined)
-      ; (useComment as vi.Mock).mockReturnValue({
+      ; (useComment as Mock).mockReturnValue({
         getCommentsByUser: () => mockComments,
         deleteComment: deleteCommentMock,
       })
 
     // Simula window.confirm como true
-    vi.spyOn(window, "confirm").mockReturnValue(true)
+    const confirmSpy = vi.spyOn(window, "confirm").mockReturnValue(true)
 
     render(
       <MemoryRouter>
@@ -99,6 +100,6 @@ describe("UserCommentsPage", () => {
       expect(deleteCommentMock).toHaveBeenCalledWith("1")
     })
 
-    window.confirm.mockRestore()
+    confirmSpy.mockRestore()
   })
 })

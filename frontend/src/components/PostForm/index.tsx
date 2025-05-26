@@ -2,7 +2,7 @@ import { useState, type FormEvent } from "react"
 import type { PostProps } from "../../types/PostType"
 import { SForm } from "./styles"
 
-interface PostFormProps {
+export interface PostFormProps {
     initialData?: Partial<PostProps>
     onSubmit: (post: {
         title: string

@@ -1,10 +1,11 @@
 /// <reference types="vitest/globals" />
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { vi } from "vitest"
+import { vi, type Mock } from "vitest"
 import { AdminEditPostPage } from "../../pages/AdminEditPost"
 import { usePost } from "../../hooks/usePost"
 import { useParams, useNavigate } from "react-router-dom"
+import type { PostFormProps } from "../../components/PostForm"
 
 // Mock do usePost
 vi.mock("../../hooks/usePost")
@@ -18,11 +19,12 @@ vi.mock("react-router-dom", () => ({
 
 // Mock do PostForm para facilitar o teste (dispara onSubmit direto)
 vi.mock("../../components/PostForm", () => ({
-  PostForm: ({ initialData, onSubmit }: any) => {
+
+  PostForm: ({ initialData, onSubmit }: PostFormProps) => {
     return (
       <>
         <div>Form mock - title: {initialData?.title}</div>
-        <button onClick={() => onSubmit({ title: "Updated Title", content: "Updated content" })}>Submit</button>
+        <button onClick={() => onSubmit({ title: "Updated Title", description: "Updated Description", content: "Updated content" })}>Submit</button>
       </>
     )
   },
@@ -36,17 +38,17 @@ describe("AdminEditPostPage", () => {
   beforeEach(() => {
     vi.clearAllMocks()
 
-      ; (usePost as vi.Mock).mockReturnValue({
+      ; (usePost as Mock).mockReturnValue({
         getPost: getPostMock,
         updatePost: updatePostMock,
       })
 
-      ; (useNavigate as vi.Mock).mockReturnValue(navigateMock)
+      ; (useNavigate as Mock).mockReturnValue(navigateMock)
   })
 
   it("exibe o formulário com dados iniciais e atualiza post", async () => {
     const user = userEvent.setup()
-      ; (useParams as vi.Mock).mockReturnValue({ id: "1" })
+      ; (useParams as Mock).mockReturnValue({ id: "1" })
 
     getPostMock.mockReturnValue({
       id: "1",
@@ -64,13 +66,13 @@ describe("AdminEditPostPage", () => {
 
     await user.click(screen.getByText("Submit"))
 
-    expect(updatePostMock).toHaveBeenCalledWith("1", { title: "Updated Title", content: "Updated content" })
+    expect(updatePostMock).toHaveBeenCalledWith("1", { title: "Updated Title", description: "Updated Description", content: "Updated content" })
     expect(navigateMock).toHaveBeenCalledWith("/admin/posts")
   })
 
   it("exibe mensagem de post não encontrado e navega ao clicar em Back", async () => {
     const user = userEvent.setup()
-      ; (useParams as vi.Mock).mockReturnValue({ id: "2" })
+      ; (useParams as Mock).mockReturnValue({ id: "2" })
 
     getPostMock.mockReturnValue(undefined) // Post não encontrado
 

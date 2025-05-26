@@ -1,7 +1,7 @@
 /// <reference types="vitest/globals" />
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { vi } from "vitest"
+import { vi, type Mock } from "vitest"
 import { AdminCreatePostPage } from "../../pages/AdminCreatePost"
 import { usePost } from "../../hooks/usePost"
 import { AuthContext } from "../../contexts/AuthContext"
@@ -24,16 +24,18 @@ describe("AdminCreatePostPage", () => {
     createPostMock.mockReset()
     navigateMock.mockReset()
 
-      ; (usePost as vi.Mock).mockReturnValue({
+
+      ; (usePost as Mock).mockReturnValue({
         createPost: createPostMock,
       })
 
-      ; (useNavigate as vi.Mock).mockReturnValue(navigateMock)
+
+      ; (useNavigate as Mock).mockReturnValue(navigateMock)
   })
 
   it("exibe mensagem de carregando quando não tem currentUser", () => {
     render(
-      <AuthContext.Provider value={{ currentUser: null }}>
+      <AuthContext.Provider value={{ currentUser: null, isLoading: false, login: vi.fn(), register: vi.fn(), logout: vi.fn() }}>
         <AdminCreatePostPage />
       </AuthContext.Provider>
     )
@@ -44,18 +46,11 @@ describe("AdminCreatePostPage", () => {
     const user = userEvent.setup()
 
     render(
-      <AuthContext.Provider value={{ currentUser: { id: "1", name: "Admin User" } }}>
+      <AuthContext.Provider value={{ currentUser: { id: "1", name: "Admin User", email: 'admin@example.com', role: 'admin' }, isLoading: false, login: vi.fn(), register: vi.fn(), logout: vi.fn() }}>
         <AdminCreatePostPage />
       </AuthContext.Provider>
     )
-
-    // Pega o componente PostForm (supondo que ele tenha um botão submit)
-    // Vamos buscar o botão pelo texto "Submit" ou similar (ajuste conforme seu PostForm)
     const submitButton = screen.getByRole("button", { name: /Publicar/i })
-
-    // Simule o preenchimento do formulário se quiser (depende do PostForm)
-    // Ou dispare diretamente o onSubmit do PostForm simulando dados:
-    // Mas aqui vamos simplificar disparando clique no botão e mockando createPost para funcionar
 
     // Mock do createPost resolve
     createPostMock.mockResolvedValueOnce(undefined)

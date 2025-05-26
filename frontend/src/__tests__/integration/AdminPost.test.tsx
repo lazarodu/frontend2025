@@ -3,6 +3,7 @@ import { fireEvent, render, screen } from "@testing-library/react"
 import { MemoryRouter } from "react-router-dom"
 import { AdminPostPage } from "../../pages/AdminPost"
 import { usePost } from "../../hooks/usePost"
+import type { Mock } from "vitest"
 
 // Mock do hook usePost
 vi.mock("../../hooks/usePost", () => ({
@@ -20,7 +21,7 @@ describe("AdminPostPage", () => {
   })
 
   it("mostra mensagem de loading enquanto carrega", () => {
-    (usePost as vi.Mock).mockReturnValue({
+    (usePost as Mock).mockReturnValue({
       posts: [],
       isLoading: true,
       deletePost: vi.fn(),
@@ -36,7 +37,7 @@ describe("AdminPostPage", () => {
   })
 
   it("mostra mensagem quando não há posts", () => {
-    (usePost as vi.Mock).mockReturnValue({
+    (usePost as Mock).mockReturnValue({
       posts: [],
       isLoading: false,
       deletePost: vi.fn(),
@@ -52,7 +53,7 @@ describe("AdminPostPage", () => {
   })
 
   it("renderiza a tabela com posts", () => {
-    (usePost as vi.Mock).mockReturnValue({
+    (usePost as Mock).mockReturnValue({
       posts: mockPosts,
       isLoading: false,
       deletePost: vi.fn(),
@@ -75,7 +76,7 @@ describe("AdminPostPage", () => {
   })
 
   it("o botão de criar post tem o link correto", () => {
-    (usePost as vi.Mock).mockReturnValue({
+    (usePost as Mock).mockReturnValue({
       posts: [],
       isLoading: false,
       deletePost: vi.fn(),
@@ -93,7 +94,7 @@ describe("AdminPostPage", () => {
 
   it("chama deletePost ao confirmar exclusão", () => {
     const mockDeletePost = vi.fn().mockResolvedValue(undefined)
-      ; (usePost as vi.Mock).mockReturnValue({
+      ; (usePost as Mock).mockReturnValue({
         posts: mockPosts,
         isLoading: false,
         deletePost: mockDeletePost,
@@ -117,7 +118,7 @@ describe("AdminPostPage", () => {
 
   it("não chama deletePost se confirmar for false", () => {
     const mockDeletePost = vi.fn()
-      ; (usePost as vi.Mock).mockReturnValue({
+      ; (usePost as Mock).mockReturnValue({
         posts: mockPosts,
         isLoading: false,
         deletePost: mockDeletePost,

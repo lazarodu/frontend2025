@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react"
 import { MemoryRouter } from "react-router-dom"
 import { ProtectedRoute } from "../../routes/ProtectedRoute"
 import { useAuth } from "../../hooks/useAuth"
+import type { Mock } from "vitest"
 
 // Mock do hook
 vi.mock("../../hooks/useAuth")
@@ -12,7 +13,7 @@ describe("ProtectedRoute", () => {
   })
 
   it("exibe Loading quando isLoading é true", () => {
-    (useAuth as vi.Mock).mockReturnValue({
+    (useAuth as Mock).mockReturnValue({
       currentUser: null,
       isLoading: true
     })
@@ -29,7 +30,7 @@ describe("ProtectedRoute", () => {
   })
 
   it("redireciona para /login quando não está autenticado", () => {
-    (useAuth as vi.Mock).mockReturnValue({
+    (useAuth as Mock).mockReturnValue({
       currentUser: null,
       isLoading: false
     })
@@ -46,7 +47,7 @@ describe("ProtectedRoute", () => {
   })
 
   it("redireciona para / quando requireAdmin é true e não é admin", () => {
-    (useAuth as vi.Mock).mockReturnValue({
+    (useAuth as Mock).mockReturnValue({
       currentUser: { id: "1", role: "user" },
       isLoading: false
     })
@@ -63,7 +64,7 @@ describe("ProtectedRoute", () => {
   })
 
   it("renderiza children quando autenticado e sem requireAdmin", () => {
-    (useAuth as vi.Mock).mockReturnValue({
+    (useAuth as Mock).mockReturnValue({
       currentUser: { id: "1", role: "user" },
       isLoading: false
     })
@@ -80,7 +81,7 @@ describe("ProtectedRoute", () => {
   })
 
   it("renderiza children quando autenticado como admin e requireAdmin é true", () => {
-    (useAuth as vi.Mock).mockReturnValue({
+    (useAuth as Mock).mockReturnValue({
       currentUser: { id: "1", role: "admin" },
       isLoading: false
     })
