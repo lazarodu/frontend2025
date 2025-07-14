@@ -3,6 +3,7 @@
 import { createContext, useState, useEffect, type ReactNode, useContext } from "react"
 import type { UserProps } from "../types/UserType"
 import { mockUsers } from "../mocks/UserMock"
+import { apiUser } from "../services"
 
 export interface AuthContextType {
   currentUser: UserProps | null
@@ -40,9 +41,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const login = async (email: string, password: string) => {
     // Simula chamada de API
     return new Promise<void>((resolve, reject) => {
-      setTimeout(() => {
-        const user = mockUsers.find((u) => u.email === email && u.password === password)
-
+      setTimeout(async () => {
+        //const user = mockUsers.find((u) => u.email === email && u.password === password)
+        const response = await apiUser.login({ email, password })
+        const user = response.data
         if (user) {
           // Remove password before storing
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -60,8 +62,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const register = async (name: string, email: string, password: string) => {
     // Simula chamada de API
     return new Promise<void>((resolve, reject) => {
-      setTimeout(() => {
-        const existingUser = mockUsers.find((u) => u.email === email)
+      setTimeout(async () => {
+        //const existingUser = mockUsers.find((u) => u.email === email)
+        const response = await apiUser.register({ name, email, password })
+        const existingUser = response.data
 
         if (existingUser) {
           reject(new Error("Email already in use"))
