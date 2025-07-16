@@ -3,8 +3,14 @@ export interface PostProps {
   title: string;
   description: string;
   content: string
-  autor: string;
-  data: string;
+  user_id: string;
+  date: string;
+  user?: {
+    id: string;
+    name: string;
+    email: string;
+    role: 'user' | 'admin';
+  };
 }
 export interface PostListProps {
   posts: PostProps[];

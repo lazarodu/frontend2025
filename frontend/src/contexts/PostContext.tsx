@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, type ReactNode } from "react"
 import type { PostProps } from "../types/PostType"
-import { mockPosts } from "../mocks/PostMock"
+//import { mockPosts } from "../mocks/PostMock"
+import { apiPost } from "../services"
 
 interface PostContextType {
   posts: PostProps[]
@@ -15,8 +16,8 @@ export const PostContext = createContext<PostContextType>({
   posts: [],
   isLoading: true,
   getPost: () => undefined,
-  createPost: async () => ({ id: "", title: "", description: "", content: "", autor: "", data: "" }),
-  updatePost: async () => ({ id: "", title: "", description: "", content: "", autor: "", data: "" }),
+  createPost: async () => ({ id: "", title: "", description: "", content: "", user_id: "", date: "" }),
+  updatePost: async () => ({ id: "", title: "", description: "", content: "", user_id: "", date: "" }),
   deletePost: async () => { },
 })
 
@@ -30,8 +31,9 @@ export const PostProvider = ({ children }: PostProviderProps) => {
 
   useEffect(() => {
     // Simula chamada de API
-    setTimeout(() => {
-      setPosts(mockPosts)
+    setTimeout(async () => {
+      const response = await apiPost.getAll()
+      setPosts(response.data)
       setIsLoading(false)
     }, 500)
   }, [])
@@ -47,7 +49,7 @@ export const PostProvider = ({ children }: PostProviderProps) => {
         const newPost: PostProps = {
           id: `post-${Date.now()}`,
           ...postData,
-          data: `${new Date().toLocaleDateString()}`,
+          date: `${new Date().toLocaleDateString()}`,
         }
 
         setPosts((prevPosts) => [...prevPosts, newPost])

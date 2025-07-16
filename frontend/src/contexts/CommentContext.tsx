@@ -2,25 +2,26 @@
 
 import { createContext, useState, useEffect, type ReactNode } from "react"
 import type { CommentProps } from "../types/CommentType"
-import { mockComments } from "../mocks/CommentMock"
-import type { UserProps } from "../types/UserType"
-import { mockUsers } from "../mocks/UserMock"
+// import { mockComments } from "../mocks/CommentMock"
+//import type { UserProps } from "../types/UserType"
+// import { mockUsers } from "../mocks/UserMock"
+import { apiComment } from "../services"
 
 interface CommentContextType {
   comments: CommentProps[]
   isLoading: boolean
-  getCommentsByPost: (postId: string) => CommentProps[]
-  getCommentsByUser: (userId: string) => CommentProps[]
-  addComment: (comment: Omit<CommentProps, "id" | "data">) => Promise<CommentProps>
+  getCommentsByPost: (post_id: string) => Promise<CommentProps[]>
+  getCommentsByUser: () => Promise<CommentProps[]>
+  addComment: (comment: Omit<CommentProps, "id" | "date">) => Promise<CommentProps>
   deleteComment: (id: string) => Promise<void>
 }
 
 export const CommentContext = createContext<CommentContextType>({
   comments: [],
   isLoading: true,
-  getCommentsByPost: () => [],
-  getCommentsByUser: () => [],
-  addComment: async () => ({ id: "", postId: "", userId: "", comment: "", data: `${new Date()}` }),
+  getCommentsByPost: async () => [],
+  getCommentsByUser: async () => [],
+  addComment: async () => ({ id: "", post_id: "", user_id: "", comment: "", date: `${new Date()}` }),
   deleteComment: async () => { },
 })
 
@@ -30,43 +31,65 @@ interface CommentProviderProps {
 
 export const CommentProvider = ({ children }: CommentProviderProps) => {
   const [comments, setComments] = useState<CommentProps[]>([])
-  const [users, setUsers] = useState<UserProps[]>([])
+  //const [users, setUsers] = useState<UserProps[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     // Simula chamada de API
     setTimeout(() => {
-      setComments(mockComments)
+      //setComments(mockComments)
       setIsLoading(false)
-      setUsers(mockUsers)
+      //setUsers(mockUsers)
     }, 500)
   }, [])
 
-  const getCommentsByPost = (postId: string) => {
-    return comments.filter((comment) => comment.postId === postId).map((p) => ({
+  const getCommentsByPost = async (post_id: string) => {
+    /*
+    return comments.filter((comment) => comment.post_id === post_id).map((p) => ({
       ...p,
-      autor: users.filter(u => u.id === p.userId)[0].name
-    }))
+      autor: users.filter(u => u.id === p.user_id)[0].name
+    }))*/
+    try {
+      setIsLoading(true)
+      const response = await apiComment.getByPost(post_id)
+      return response.data
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
-  const getCommentsByUser = (userId: string) => {
-    return comments.filter((comment) => comment.userId === userId)
+  const getCommentsByUser = async () => {
+    // return comments.filter((comment) => comment.user_id === user_id)
+    try {
+      setIsLoading(true)
+      const response = await apiComment.getByUser()
+      return response.data
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
-  const addComment = async (commentData: Omit<CommentProps, "id" | "data">) => {
+  const addComment = async (commentData: Omit<CommentProps, "id" | "date">) => {
     // Simula chamada de API
+    /*
     return new Promise<CommentProps>((resolve) => {
       setTimeout(() => {
         const newComment: CommentProps = {
           id: `comment-${Date.now()}`,
           ...commentData,
-          data: `${new Date().toLocaleDateString()}`,
+          date: `${new Date().toLocaleDateString()}`,
         }
 
         setComments((prevComments) => [...prevComments, newComment])
         resolve(newComment)
       }, 500)
-    })
+    })*/
+    const response = await apiComment.create(commentData)
+    return response.data
   }
 
   const deleteComment = async (id: string) => {

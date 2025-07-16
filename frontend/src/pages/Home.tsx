@@ -1,7 +1,9 @@
 import { Post } from "../components/Post";
-import { mockPosts } from "../mocks/PostMock";
+import { usePost } from "../hooks/usePost";
+//import { mockPosts } from "../mocks/PostMock";
 
 export function Home() {
+  const { posts } = usePost()
 
-  return <Post posts={mockPosts} />;
+  return <Post posts={posts} />;
 }

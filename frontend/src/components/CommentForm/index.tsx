@@ -4,11 +4,11 @@ import { useComment } from "../../hooks/useComment";
 import { useAuth } from "../../hooks/useAuth";
 
 interface CommentFormProps {
-  postId: string
+  post_id: string
   onSubmit: (post: { comment: string }) => void;
 }
 
-export function CommentForm({ postId, onSubmit }: CommentFormProps) {
+export function CommentForm({ post_id, onSubmit }: CommentFormProps) {
   const [comment, setComment] = useState("");
   const { addComment } = useComment()
   const { currentUser } = useAuth()
@@ -22,8 +22,8 @@ export function CommentForm({ postId, onSubmit }: CommentFormProps) {
     setIsLoading(true)
     try {
       await addComment({
-        postId,
-        userId: currentUser!.id,
+        post_id,
+        user_id: currentUser!.id,
         autor: currentUser!.name,
         comment: comment.trim(),
       })

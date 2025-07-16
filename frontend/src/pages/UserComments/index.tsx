@@ -19,18 +19,22 @@ export const UserCommentsPage = () => {
 
   useEffect(() => {
     if (currentUser) {
-      const comments = getCommentsByUser(currentUser.id)
+      async function loadComments() {
+        const comments = await getCommentsByUser()
+        // Adiciona postTitle para cada comment
 
-      // Adiciona postTitle para cada comment
-      const commentsWithPost = comments.map((comment) => {
-        const post = posts.find((a) => a.id === comment.postId)
-        return {
-          ...comment,
-          postTitle: post ? post.title : "Post não encontrado",
-        }
-      })
+        const commentsWithPost = comments.map((comment) => {
+          const post = posts.find((a) => a.id === comment.post_id)
+          return {
+            ...comment,
+            postTitle: post ? post.title : "Post não encontrado",
+          }
+        })
 
-      setUserComments(commentsWithPost)
+        setUserComments(commentsWithPost)
+
+      }
+      loadComments()
       setIsLoading(false)
     }
   }, [currentUser, getCommentsByUser, posts])
@@ -69,7 +73,7 @@ export const UserCommentsPage = () => {
             <CommentItem key={comment.id}>
               <CommentHeader>
                 <PostTitle>{comment.postTitle}</PostTitle>
-                <CommentDate>{comment.data}</CommentDate>
+                <CommentDate>{comment.date}</CommentDate>
               </CommentHeader>
               <CommentContent>{comment.comment}</CommentContent>
               <DeleteButton onClick={() => handleDeleteComment(comment.id)}>Apagar</DeleteButton>

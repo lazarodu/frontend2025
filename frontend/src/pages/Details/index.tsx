@@ -46,10 +46,10 @@ export function Details() {
         title={post.title}
         description={post.description}
         content={post.content}
-        autor={post.autor}
-        data={post.data}
+        autor={String(post.user?.name)}
+        data={post.date}
       />
-      {currentUser && <CommentForm postId={post.id} onSubmit={handleCommentAdded} />}
+      {currentUser && <CommentForm post_id={post.id} onSubmit={handleCommentAdded} />}
       <CommentList comments={postComments} />
     </>
   );
