@@ -6,6 +6,8 @@ import { useComment } from "../../hooks/useComment";
 import { useAuth } from "../../hooks/useAuth";
 import { CommentForm } from "../../components/CommentForm";
 import { CommentList } from "../../components/CommentList";
+import type { PostProps } from "../../types/PostType";
+import type { CommentProps } from "../../types/CommentType";
 
 export function Details() {
   const { id } = useParams<{ id: string }>()
@@ -15,13 +17,17 @@ export function Details() {
   const { comments, getCommentsByPost } = useComment()
   const { currentUser } = useAuth()
 
-  const [post, setPost] = useState(id ? getPost(id) : undefined)
-  const [postComments, setPostComments] = useState(id ? getCommentsByPost(id) : [])
+  const [post, setPost] = useState<PostProps>()
+  const [postComments, setPostComments] = useState<CommentProps[]>([])
 
   useEffect(() => {
     if (id) {
-      setPost(getPost(id))
-      setPostComments(getCommentsByPost(id))
+      const loadPostComments = async () => {
+        setPost(getPost(id))
+        setPostComments(await getCommentsByPost(id))
+
+      }
+      loadPostComments()
     }
   }, [id, getPost, getCommentsByPost, comments])
 
@@ -34,9 +40,9 @@ export function Details() {
     )
   }
 
-  const handleCommentAdded = () => {
+  const handleCommentAdded = async () => {
     if (id) {
-      setPostComments(getCommentsByPost(id))
+      setPostComments(await getCommentsByPost(id))
     }
   }
 

@@ -4,6 +4,12 @@ export interface CommentProps {
   user_id: string
   comment: string
   date: string
+  user?: {
+    id: string;
+    name: string;
+    email: string;
+    role: 'user' | 'admin';
+  };
 }
 
 export interface CommentListProps {

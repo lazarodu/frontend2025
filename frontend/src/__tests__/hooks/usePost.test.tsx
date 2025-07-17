@@ -9,8 +9,8 @@ describe("usePosts Hook", () => {
       posts: [],
       isLoading: false,
       getPost: () => undefined,
-      createPost: async () => ({ id: "", title: "", description: "", content: "", autor: "", data: "" }),
-      updatePost: async () => ({ id: "", title: "", description: "", content: "", autor: "", data: "" }),
+      createPost: async () => ({ id: "", title: "", description: "", content: "", user_id: "", date: "" }),
+      updatePost: async () => ({ id: "", title: "", description: "", content: "", user_id: "", date: "" }),
       deletePost: async () => { },
     }
 

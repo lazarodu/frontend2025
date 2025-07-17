@@ -24,7 +24,6 @@ export function CommentForm({ post_id, onSubmit }: CommentFormProps) {
       await addComment({
         post_id,
         user_id: currentUser!.id,
-        autor: currentUser!.name,
         comment: comment.trim(),
       })
 

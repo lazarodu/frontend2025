@@ -19,8 +19,7 @@ function TestComponent() {
           createPost({
             title: "New Post",
             description: "desc",
-            content: "content",
-            autor: "Autor",
+            content: "content"
           })
         }
         data-testid="create"
@@ -30,7 +29,7 @@ function TestComponent() {
 
       <button
         onClick={() =>
-          updatePost("1", { title: "Updated Title" }).catch(() => {})
+          updatePost("1", { title: "Updated Title" }).catch(() => { })
         }
         data-testid="update"
       >
@@ -38,7 +37,7 @@ function TestComponent() {
       </button>
 
       <button
-        onClick={() => deletePost("1").catch(() => {})}
+        onClick={() => deletePost("1").catch(() => { })}
         data-testid="delete"
       >
         Delete Post 1

@@ -3,7 +3,7 @@ export interface PostProps {
   title: string;
   description: string;
   content: string
-  user_id: string;
+  user_id?: string;
   date: string;
   user?: {
     id: string;

@@ -8,9 +8,9 @@ describe("useComments Hook", () => {
     const contextValue = {
       comments: [],
       isLoading: false,
-      getCommentsByPost: () => [],
-      getCommentsByUser: () => [],
-      addComment: async () => ({ id: "", post_id: "", user_id: "", comment: "", data: `${new Date()}` }),
+      getCommentsByPost: async () => [],
+      getCommentsByUser: async () => [],
+      addComment: async () => ({ id: "", post_id: "", user_id: "", comment: "", date: `${new Date()}` }),
       deleteComment: async () => { },
     }
 

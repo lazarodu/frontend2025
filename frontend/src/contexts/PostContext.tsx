@@ -7,7 +7,7 @@ interface PostContextType {
   posts: PostProps[]
   isLoading: boolean
   getPost: (id: string) => PostProps | undefined
-  createPost: (post: Omit<PostProps, "id" | "data">) => Promise<PostProps>
+  createPost: (post: Omit<PostProps, "id" | "date" | "user_id">) => Promise<PostProps>
   updatePost: (id: string, post: Partial<PostProps>) => Promise<PostProps>
   deletePost: (id: string) => Promise<void>
 }
@@ -42,11 +42,11 @@ export const PostProvider = ({ children }: PostProviderProps) => {
     return posts.find((post) => post.id === id)
   }
 
-  const createPost = async (postData: Omit<PostProps, "id" | "data">) => {
+  const createPost = async (postData: Omit<PostProps, "id" | "date" | "user_id">) => {
     // Simula chamada de API
     return new Promise<PostProps>((resolve) => {
       setTimeout(() => {
-        const newPost: PostProps = {
+        const newPost = {
           id: `post-${Date.now()}`,
           ...postData,
           date: `${new Date().toLocaleDateString()}`,

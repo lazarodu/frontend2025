@@ -15,11 +15,10 @@ export const AdminCreatePostPage = () => {
   if (!currentUser) {
     return <h1>Carregando...</h1>
   }
-  const handleSubmit = async (postData: Omit<PostProps, "id" | "autor" | "data">) => {
+  const handleSubmit = async (postData: Omit<PostProps, "id" | "date" | "user_id">) => {
     try {
       await createPost({
-        ...postData,
-        autor: currentUser?.name,
+        ...postData
       })
       navigate("/admin/posts")
     } catch (error) {

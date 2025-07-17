@@ -22,7 +22,7 @@ export const AdminEditPostPage = () => {
     }
   }, [id, getPost])
 
-  const handleSubmit = async (postData: Omit<PostProps, "id" | "data" | "autor">) => {
+  const handleSubmit = async (postData: Omit<PostProps, "id" | "date" | "user_id">) => {
     if (!id) return
 
 
